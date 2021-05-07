@@ -97,3 +97,31 @@ class PrivateProductApiTests(TestCase):
         product = Product.objects.get(id=res.data['id'])
         for key in payload.keys():
             self.assertEqual(payload[key], getattr(product, key))
+
+    def test_partial_update_product(self):
+        product = sample_product(user=self.user)
+
+        payload = {
+            'code': '0001',
+        }
+
+        url = detail_url(product.id)
+        self.client.patch(url, payload)
+
+        product.refresh_from_db()
+        self.assertEqual(product.code, payload['code'])
+
+    def test_full_update_product(self):
+        product = sample_product(user=self.user)
+        payload = {
+            'code': '0002',
+            'description': 'full update',
+            'picture': 'ulr-updated'
+        }
+        url = detail_url(product.id)
+        self.client.put(url, payload)
+
+        product.refresh_from_db()
+        self.assertEqual(product.code, payload['code'])
+        self.assertEqual(product.description, payload['description'])
+        self.assertEqual(product.picture, payload['picture'])
