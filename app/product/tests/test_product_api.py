@@ -7,9 +7,13 @@ from rest_framework.test import APIClient
 
 from core.models import Product
 
-from product.serializers import ProductSerializer
+from product.serializers import ProductSerializer, ProductDetailSerializer
 
 PRODUCT_URL = reverse('product:product-list')
+
+
+def detail_url(product_id):
+    return reverse('product:product-detail', args=[product_id])
 
 
 def sample_product(user, **params):
@@ -69,4 +73,14 @@ class PrivateProductApiTests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(len(res.data), 1)
+        self.assertEqual(res.data, serializer.data)
+
+    def test_view_product_detail(self):
+        product = sample_product(user=self.user)
+
+        url = detail_url(product.id)
+        res = self.client.get(url)
+
+        serializer = ProductDetailSerializer(product)
+
         self.assertEqual(res.data, serializer.data)

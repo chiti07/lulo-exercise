@@ -43,3 +43,9 @@ class ProductViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
+
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            return serializers.ProductDetailSerializer
+
+        return self.serializer_class
