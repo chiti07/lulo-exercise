@@ -84,3 +84,16 @@ class PrivateProductApiTests(TestCase):
         serializer = ProductDetailSerializer(product)
 
         self.assertEqual(res.data, serializer.data)
+
+    def test_create_basec_product(self):
+        payload = {
+            'code': '0000',
+            'description': 'Product Test',
+            'picture': 'url-picture'
+        }
+        res = self.client.post(PRODUCT_URL, payload)
+
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        product = Product.objects.get(id=res.data['id'])
+        for key in payload.keys():
+            self.assertEqual(payload[key], getattr(product, key))
