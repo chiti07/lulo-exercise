@@ -44,15 +44,7 @@ class ModelTests(TestCase):
     def test_tag_str(self):
         tag = models.Tag.objects.create(
             user=sample_user(),
-            name='Vegan'
-        )
-
-        self.assertEqual(str(tag), tag.name)
-
-    def test_tag_str(self):
-        tag = models.Tag.objects.create(
-            user=sample_user(),
-            name='Vegan'
+            name='Car'
         )
 
         self.assertEqual(str(tag), tag.name)
@@ -60,7 +52,9 @@ class ModelTests(TestCase):
     def test_product_str(self):
         product = models.Product.objects.create(
             user=sample_user(),
-            title='Zanahoria',
-            time_minutes=5,
-            price=5.00
+            code='0000',
+            description='This is a new product',
+            picture='url:'
         )
+
+        self.assertEqual(str(product), product.code)

@@ -35,8 +35,8 @@ class PrivateTagsApiTests(TestCase):
         self.client.force_authenticate(self.user)
 
     def test_retrieve_tags(self):
-        Tag.objects.create(user=self.user, name='Vegan')
-        Tag.objects.create(user=self.user, name='Dessert')
+        Tag.objects.create(user=self.user, name='VW')
+        Tag.objects.create(user=self.user, name='Car')
 
         res = self.client.get(TAGS_URL)
 
@@ -50,8 +50,8 @@ class PrivateTagsApiTests(TestCase):
             'other@lulobank.com',
             '12345'
         )
-        Tag.objects.create(user=user2, name='Fruity')
-        tag = Tag.objects.create(user=self.user, name='confort Food')
+        Tag.objects.create(user=user2, name='Audi')
+        tag = Tag.objects.create(user=self.user, name='Car')
 
         res = self.client.get(TAGS_URL)
 

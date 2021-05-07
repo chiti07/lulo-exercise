@@ -45,16 +45,15 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+
 class Product(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
     )
-    title = models.CharField(max_length=255)
-    time_minutes = models.IntegerField()
-    price = models.DecimalField(max_digits=5, decimal_places=2)
-    link = models.CharField(max_length=255,blank=True)
-    tags = models.ManyToManyField('Tag')
+    code = models.CharField(max_length=255)
+    description = models.CharField(max_length=255)
+    picture = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.title
+        return self.code
